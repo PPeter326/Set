@@ -20,134 +20,206 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Tkf-2E-5wv">
-                                <rect key="frame" x="16" y="70" width="343" height="497"/>
+                                <rect key="frame" x="20" y="80" width="335" height="529"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cae-6m-woo">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="497"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="529"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="P3y-cR-jDa">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="76"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="81.5"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mnQ-h8-aGM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="80" height="76"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mnQ-h8-aGM">
+                                                        <rect key="frame" x="0.0" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4xS-Uh-22g"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJg-Gd-nQG">
-                                                        <rect key="frame" x="88" y="0.0" width="79.5" height="76"/>
+                                                        <rect key="frame" x="86" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tzR-AR-DJs"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zjD-t7-KVr">
-                                                        <rect key="frame" x="175.5" y="0.0" width="80" height="76"/>
+                                                        <rect key="frame" x="171.5" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Odx-Td-yNr"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q8c-yr-oMj">
-                                                        <rect key="frame" x="263.5" y="0.0" width="79.5" height="76"/>
+                                                        <rect key="frame" x="257.5" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ei9-hK-ZaU"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DnY-Ws-gN1">
-                                                <rect key="frame" x="0.0" y="84" width="343" height="76.5"/>
+                                                <rect key="frame" x="0.0" y="89.5" width="335" height="81.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2IL-GG-i46">
-                                                        <rect key="frame" x="0.0" y="0.0" width="80" height="76.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tQe-oz-noN"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0A-j7-aeu">
-                                                        <rect key="frame" x="88" y="0.0" width="79.5" height="76.5"/>
+                                                        <rect key="frame" x="86" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ig7-O8-jzy"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJZ-Fk-8ui">
-                                                        <rect key="frame" x="175.5" y="0.0" width="80" height="76.5"/>
+                                                        <rect key="frame" x="171.5" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mex-AO-WBP"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tRT-Ic-e9m">
-                                                        <rect key="frame" x="263.5" y="0.0" width="79.5" height="76.5"/>
+                                                        <rect key="frame" x="257.5" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AuH-bM-9Ns"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3lw-jW-yaK">
-                                                <rect key="frame" x="0.0" y="168.5" width="343" height="76"/>
+                                                <rect key="frame" x="0.0" y="179" width="335" height="81.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G67-VP-jhw">
-                                                        <rect key="frame" x="0.0" y="0.0" width="80" height="76"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RrZ-9t-ODg"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9Y-HF-Zfa">
-                                                        <rect key="frame" x="88" y="0.0" width="79.5" height="76"/>
+                                                        <rect key="frame" x="86" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eUi-c9-Vqo"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tMR-65-7PH">
-                                                        <rect key="frame" x="175.5" y="0.0" width="80" height="76"/>
+                                                        <rect key="frame" x="171.5" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="80Y-qC-sdd"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xo5-Ye-r1Z">
-                                                        <rect key="frame" x="263.5" y="0.0" width="79.5" height="76"/>
+                                                        <rect key="frame" x="257.5" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HNu-yg-XpQ"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QjG-LZ-Ef1">
-                                                <rect key="frame" x="0.0" y="252.5" width="343" height="76"/>
+                                                <rect key="frame" x="0.0" y="268.5" width="335" height="81.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vB-2W-C5L">
-                                                        <rect key="frame" x="0.0" y="0.0" width="80" height="76"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FNk-la-DwZ"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KKp-FB-Ngi">
-                                                        <rect key="frame" x="88" y="0.0" width="79.5" height="76"/>
+                                                        <rect key="frame" x="86" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nLh-Pr-AAv"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AcB-nV-tBG">
-                                                        <rect key="frame" x="175.5" y="0.0" width="80" height="76"/>
+                                                        <rect key="frame" x="171.5" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Qg-dH-K4j"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="za8-O1-qRt">
-                                                        <rect key="frame" x="263.5" y="0.0" width="79.5" height="76"/>
+                                                        <rect key="frame" x="257.5" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H5u-a8-j7Z"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="jIW-kn-yiN">
-                                                <rect key="frame" x="0.0" y="336.5" width="343" height="76.5"/>
+                                                <rect key="frame" x="0.0" y="358" width="335" height="81.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1dk-QI-AJc">
-                                                        <rect key="frame" x="0.0" y="0.0" width="80" height="76.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="e5y-bf-5m4"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CK0-Rs-Vqq">
-                                                        <rect key="frame" x="88" y="0.0" width="79.5" height="76.5"/>
+                                                        <rect key="frame" x="86" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zRh-W3-Fet"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5Y-17-OJk">
-                                                        <rect key="frame" x="175.5" y="0.0" width="80" height="76.5"/>
+                                                        <rect key="frame" x="171.5" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UwU-FD-iMB"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EFb-Gf-Pl6">
-                                                        <rect key="frame" x="263.5" y="0.0" width="79.5" height="76.5"/>
+                                                        <rect key="frame" x="257.5" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2aN-zD-g6w"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="j9T-sb-p1d">
-                                                <rect key="frame" x="0.0" y="421" width="343" height="76"/>
+                                                <rect key="frame" x="0.0" y="447.5" width="335" height="81.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2A-lp-0tM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="80" height="76"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BVZ-U7-811"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRT-qr-fQd">
-                                                        <rect key="frame" x="88" y="0.0" width="79.5" height="76"/>
+                                                        <rect key="frame" x="86" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KGg-mW-UTT"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l9i-la-nPY">
-                                                        <rect key="frame" x="175.5" y="0.0" width="80" height="76"/>
+                                                        <rect key="frame" x="171.5" y="0.0" width="78" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6tY-uF-F8D"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0dd-1T-zcj">
-                                                        <rect key="frame" x="263.5" y="0.0" width="79.5" height="76"/>
+                                                        <rect key="frame" x="257.5" y="0.0" width="77.5" height="81.5"/>
                                                         <color key="backgroundColor" red="0.98039215800000001" green="0.88627451660000001" blue="0.19607838990000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="cardButtonDidPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dm2-Zc-fKZ"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -155,16 +227,77 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ytd-vy-xxc">
+                                <rect key="frame" x="20" y="20" width="144" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dep-vr-LtP">
+                                <rect key="frame" x="274" y="25" width="81" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="NEW GAME">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="newGameButtonTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="72b-hk-IFA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTR-ZA-oLL">
+                                <rect key="frame" x="152.5" y="617" width="70" height="40"/>
+                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="iFT-3g-Toq"/>
+                                    <constraint firstAttribute="height" constant="40" id="tvy-Jz-Ryn"/>
+                                </constraints>
+                                <state key="normal" title="DEAL">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="dealCardButtonTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZJS-P3-LBe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="3.2187440979999998e-07" green="0.63529413940000001" blue="0.99999994039999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Tkf-2E-5wv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="LMg-sd-Qrd"/>
-                            <constraint firstItem="Tkf-2E-5wv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="SVC-wV-BQf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Tkf-2E-5wv" secondAttribute="trailing" constant="16" id="d38-Pj-1pb"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Tkf-2E-5wv" secondAttribute="bottom" constant="100" id="ecY-c2-sSM"/>
+                            <constraint firstItem="Tkf-2E-5wv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="LMg-sd-Qrd"/>
+                            <constraint firstItem="Tkf-2E-5wv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="SVC-wV-BQf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Tkf-2E-5wv" secondAttribute="trailing" constant="20" id="d38-Pj-1pb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tTR-ZA-oLL" secondAttribute="bottom" constant="10" id="saa-u3-MCB"/>
+                            <constraint firstItem="tTR-ZA-oLL" firstAttribute="top" secondItem="Tkf-2E-5wv" secondAttribute="bottom" constant="8" symbolic="YES" id="tHx-wd-6PO"/>
+                            <constraint firstItem="tTR-ZA-oLL" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="xYv-5a-RMW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="dealCardButton" destination="tTR-ZA-oLL" id="qvr-sS-05k"/>
+                        <outlet property="scoreLabel" destination="ytd-vy-xxc" id="3ej-nb-d6x"/>
+                        <outletCollection property="cardButtons" destination="mnQ-h8-aGM" collectionClass="NSMutableArray" id="Htr-hj-b3l"/>
+                        <outletCollection property="cardButtons" destination="tJg-Gd-nQG" collectionClass="NSMutableArray" id="I5i-14-0vW"/>
+                        <outletCollection property="cardButtons" destination="zjD-t7-KVr" collectionClass="NSMutableArray" id="DVY-58-oP7"/>
+                        <outletCollection property="cardButtons" destination="Q8c-yr-oMj" collectionClass="NSMutableArray" id="GnR-Se-5xq"/>
+                        <outletCollection property="cardButtons" destination="2IL-GG-i46" collectionClass="NSMutableArray" id="sQh-0r-E4P"/>
+                        <outletCollection property="cardButtons" destination="x0A-j7-aeu" collectionClass="NSMutableArray" id="KqT-c9-06Z"/>
+                        <outletCollection property="cardButtons" destination="vJZ-Fk-8ui" collectionClass="NSMutableArray" id="b16-Yu-hze"/>
+                        <outletCollection property="cardButtons" destination="tRT-Ic-e9m" collectionClass="NSMutableArray" id="012-uS-lZb"/>
+                        <outletCollection property="cardButtons" destination="G67-VP-jhw" collectionClass="NSMutableArray" id="UrY-fJ-SWd"/>
+                        <outletCollection property="cardButtons" destination="f9Y-HF-Zfa" collectionClass="NSMutableArray" id="lPN-ZH-Iiy"/>
+                        <outletCollection property="cardButtons" destination="tMR-65-7PH" collectionClass="NSMutableArray" id="Pwc-Aw-sig"/>
+                        <outletCollection property="cardButtons" destination="Xo5-Ye-r1Z" collectionClass="NSMutableArray" id="KFo-8g-gSU"/>
+                        <outletCollection property="cardButtons" destination="1vB-2W-C5L" collectionClass="NSMutableArray" id="A2W-1q-QsM"/>
+                        <outletCollection property="cardButtons" destination="KKp-FB-Ngi" collectionClass="NSMutableArray" id="Vhh-d9-IGi"/>
+                        <outletCollection property="cardButtons" destination="AcB-nV-tBG" collectionClass="NSMutableArray" id="xYR-o3-2PJ"/>
+                        <outletCollection property="cardButtons" destination="za8-O1-qRt" collectionClass="NSMutableArray" id="BUJ-c8-fW5"/>
+                        <outletCollection property="cardButtons" destination="1dk-QI-AJc" collectionClass="NSMutableArray" id="o4a-yN-nwE"/>
+                        <outletCollection property="cardButtons" destination="CK0-Rs-Vqq" collectionClass="NSMutableArray" id="oo4-65-V6F"/>
+                        <outletCollection property="cardButtons" destination="b5Y-17-OJk" collectionClass="NSMutableArray" id="AnA-TL-md1"/>
+                        <outletCollection property="cardButtons" destination="EFb-Gf-Pl6" collectionClass="NSMutableArray" id="ygA-bh-ySJ"/>
+                        <outletCollection property="cardButtons" destination="C2A-lp-0tM" collectionClass="NSMutableArray" id="F9L-UL-f7R"/>
+                        <outletCollection property="cardButtons" destination="ZRT-qr-fQd" collectionClass="NSMutableArray" id="4yC-Nr-yiS"/>
+                        <outletCollection property="cardButtons" destination="l9i-la-nPY" collectionClass="NSMutableArray" id="SRC-yn-ZR4"/>
+                        <outletCollection property="cardButtons" destination="0dd-1T-zcj" collectionClass="NSMutableArray" id="fWE-0F-Ffb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
