@@ -103,9 +103,9 @@ class ViewController: UIViewController {
         }
         // disable deal card button when:
         // 1. If the deck is empty (always)
-        // 2. If there are already 24 cards being played (but enable if the 3 selected cards are matching)
+        // 2. If there are already 24 cards (number of card buttons showing on UI) being played (but enable if the 3 selected cards are matching)
         var disableDealcard = false
-        if set.playedCards.count == 24 {
+        if set.playedCards.count == cardButtons.count {
             disableDealcard = true
             if set.selectedCards.count == 3 && set.matched == true {
                 disableDealcard = false
@@ -143,7 +143,6 @@ class ViewController: UIViewController {
         }
         // only display cards that are being played
         for index in set.playedCards.indices {
-            print(index)
             cardButtons[index].isEnabled = true
             cardButtons[index].isHidden = false
             cardButtons[index].layer.borderWidth = CGFloat(0)

@@ -32,7 +32,13 @@ class Set {
     // MARK: Game properties and initializer
     
     var deck: [Card]
-    var selectedCards = [Card]()
+    var selectedCards = [Card]() {
+        didSet {
+            if selectedCards.count == 3 {
+                matchCards()
+            }
+        }
+    }
     var matchedCards = [Card]()
     var playedCards = [Card]()
     private(set) var matched = false
@@ -47,38 +53,25 @@ class Set {
     // MARK: - Game Methdods
     
     func selectCard(card: Card) {
+        // Do nothing if it's one of the matched cards
         // 1. Add to selected cards -> return true
         //  a. if the card is not already selected
         //  b.
         // 2. Remove from selected cards -> return false
         //  a. If the card is already selected
         // I. Add or remove cards in selectedCard arrays
-        switch self.selectedCards.count {
-        case 0, 1: // add/remove from selected cards, depending on if user already selected the card
-            addOrRemoveSelectedCard(card)
-        case 2:
-            // 1. match cards in selectedCards
-            // 2. if matched:
-            //    a.  check card if it's in the matched card set.
-            //        i.  yes:  do nothing
-            //        ii. no:   clear selected cards array, add card to selected card array
-            // 3. if not matched:
-            //    a.  clear selected array, add card to selected card array
-            // The user could be 1. selecting a card already selected 2. selecting a new card not already selected
-            // if 2. check the cards if they match.  If they match, keep track of them in the matched cards list.
-            addOrRemoveSelectedCard(card)
-            if selectedCards.count == 3 {
-                matchCards()
-            }
-        case 3:
-            // User should not be able to select any of the matched cards.  For any other cards, simply clear the selectedcards array and append new one
-            // the 3 cards already selected could be A. matched or B. not-matched
-            // the new card user selected could be 1. already selected or 2. not already selected
-            // 1. - A.  nothing happens.  User can't select a card that's already matching.
-            // 1. - B. clear selected cards, and add user's selected card to the list.
-            // 2. - A. The played cards replace selected cards with new cards from deck.  The selected cards are cleared.  User's new select card is added to the selcted cards list.
-            // 2. - B. clear selected cards, and add user's selected card to the list
-            if !matchedCards.contains(card) {
+        if !matchedCards.contains(card) {
+            switch self.selectedCards.count {
+            case 0...2: // add/remove from selected cards, depending on if user already selected the card
+                addOrRemoveSelectedCard(card)
+            case 3:
+                // User should not be able to select any of the matched cards.  For any other cards, simply clear the selectedcards array and append new one
+                // the 3 cards already selected could be A. matched or B. not-matched
+                // the new card user selected could be 1. already selected or 2. not already selected
+                // 1. - A.  nothing happens.  User can't select a card that's already matching.
+                // 1. - B. clear selected cards, and add user's selected card to the list.
+                // 2. - A. The played cards replace selected cards with new cards from deck.  The selected cards are cleared.  User's new select card is added to the selcted cards list.
+                // 2. - B. clear selected cards, and add user's selected card to the list
                 if matched && !deck.isEmpty { // replace played cards with cards from deck if there was a match and deck is not empty
                     for selectedCard in selectedCards {
                         replacePlayedCard(atIndex: playedCards.index(of: selectedCard)!)
@@ -86,9 +79,9 @@ class Set {
                 }
                 selectedCards.removeAll()
                 selectedCards.append(card)
+            default: // There should be no more than 3 cards selected at a time
+                break
             }
-        default: // There should be no more than 3 cards selected at a time
-            break
         }
     }
     
@@ -168,6 +161,7 @@ class Set {
             selectedCards.append(card)
         }
     }
+    
     private func onlyTwoEquals(amongst cards:[Card]) -> Bool {
         // Go through each card in the array and compare each attribute.  The cards are matched only if all attributes of all cards in a set are same or totally different.
         // Attribute 1 comparison
@@ -201,6 +195,7 @@ extension Int {
         }
     }
 }
+
 
 
 
