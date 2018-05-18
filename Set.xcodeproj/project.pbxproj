@@ -14,6 +14,9 @@
 		F966522B2086B2E600746187 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96652292086B2E600746187 /* LaunchScreen.storyboard */; };
 		F96652332086C8D700746187 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96652322086C8D700746187 /* Set.swift */; };
 		F9ADA91E208E568000B3A309 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ADA91D208E568000B3A309 /* Card.swift */; };
+		F9DC10B520AE34B40085D038 /* PlayingCardsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DC10B420AE34B40085D038 /* PlayingCardsMainView.swift */; };
+		F9DC10B720AE35550085D038 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DC10B620AE35550085D038 /* CardView.swift */; };
+		F9E7DF9920A248770066FB04 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E7DF9820A248770066FB04 /* Grid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		F966522C2086B2E600746187 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F96652322086C8D700746187 /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		F9ADA91D208E568000B3A309 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		F9DC10B420AE34B40085D038 /* PlayingCardsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardsMainView.swift; sourceTree = "<group>"; };
+		F9DC10B620AE35550085D038 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		F9E7DF9820A248770066FB04 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,10 +64,9 @@
 		F966521F2086B2DE00746187 /* Set */ = {
 			isa = PBXGroup;
 			children = (
-				F96652322086C8D700746187 /* Set.swift */,
-				F9ADA91D208E568000B3A309 /* Card.swift */,
-				F96652242086B2DE00746187 /* Main.storyboard */,
-				F96652222086B2DE00746187 /* ViewController.swift */,
+				F9DC10B120AE344C0085D038 /* Model */,
+				F9DC10B220AE34650085D038 /* View */,
+				F9DC10B320AE34770085D038 /* Controller */,
 				F9ADA91F208E775500B3A309 /* Supporting Files */,
 				F966522C2086B2E600746187 /* Info.plist */,
 			);
@@ -76,6 +81,34 @@
 				F96652202086B2DE00746187 /* AppDelegate.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F9DC10B120AE344C0085D038 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F96652322086C8D700746187 /* Set.swift */,
+				F9ADA91D208E568000B3A309 /* Card.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F9DC10B220AE34650085D038 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F96652242086B2DE00746187 /* Main.storyboard */,
+				F9DC10B420AE34B40085D038 /* PlayingCardsMainView.swift */,
+				F9DC10B620AE35550085D038 /* CardView.swift */,
+				F9E7DF9820A248770066FB04 /* Grid.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F9DC10B320AE34770085D038 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F96652222086B2DE00746187 /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,9 +182,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9DC10B720AE35550085D038 /* CardView.swift in Sources */,
 				F96652232086B2DE00746187 /* ViewController.swift in Sources */,
 				F96652212086B2DE00746187 /* AppDelegate.swift in Sources */,
+				F9DC10B520AE34B40085D038 /* PlayingCardsMainView.swift in Sources */,
 				F96652332086C8D700746187 /* Set.swift in Sources */,
+				F9E7DF9920A248770066FB04 /* Grid.swift in Sources */,
 				F9ADA91E208E568000B3A309 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
