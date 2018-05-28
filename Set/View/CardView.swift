@@ -10,12 +10,12 @@ import UIKit
 
 class CardView: UIView {
     
-    var numberOfSymbols: Int = 3 { didSet { setNeedsDisplay()}}
-    var symbol: Symbol = .diamond
-    var color: UIColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
-    var shade: Shade = .solid
+    var numberOfShapes: Int = 3 { didSet { setNeedsDisplay() } }
+    var shape: Shape = .diamond { didSet { setNeedsDisplay() } }
+    var color: UIColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)  { didSet { setNeedsDisplay() } }
+    var shade: Shade = .solid  { didSet { setNeedsDisplay( ) } }
 
-    enum Symbol {
+    enum Shape {
         case oval
         case squiggle
         case diamond
@@ -25,29 +25,27 @@ class CardView: UIView {
         case striped
         case unfilled
     }
+    
     override func draw(_ rect: CGRect) {
-        // Drawing code
-        let path = UIBezierPath()
-        path.lineWidth = self.frame.size.width / 30
-        let color: UIColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
-            //            createOvalShape(path: path, rect: cardView.frame, color: color)
-            let rects = divide(rect: self.bounds, numberOfSymbols: numberOfSymbols)
-            for rect in rects {
-                if let context = UIGraphicsGetCurrentContext() {
-                    context.saveGState()
-                                                    createSquiggleShape(path: path, rect: rect, color: color)
-//                                        createOvalShape(path: path, rect: rect, color: color)
-//                    createDiamondShape(path: path, rect: rect, color: color)
-                    path.addClip()
-                                createStripedShape(path: path, rect: rect, color: color)
-//                    createFilledShape(path: path, color: color)
-                    context.restoreGState()
-                }
+        
+        let rects = divide(rect: self.bounds, numberOfSymbols: numberOfShapes)
+        for rect in rects {
+            if let context = UIGraphicsGetCurrentContext() {
+                context.saveGState()
+                let shapePath = createShape(rect: rect)
+                shapePath.addClip()
+                createShade(path: shapePath, rect: rect)
+                context.restoreGState()
             }
+        }
     }
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        setNeedsDisplay()
+//    }
     
     
-    func divide(rect: CGRect, numberOfSymbols: Int) -> [CGRect] {
+    
+    private func divide(rect: CGRect, numberOfSymbols: Int) -> [CGRect] {
         // determine rectangle ratio of width and height.  If width is wider than height, then divide across horizontally
         let ratio = rect.size.width / rect.size.height
         // determine origin of first rect based on the number of rects
@@ -78,7 +76,27 @@ class CardView: UIView {
         }
         return rects
     }
-    func createStripedShape(path: UIBezierPath, rect: CGRect, color: UIColor) {
+    
+    private func createShape(rect: CGRect) -> UIBezierPath {
+        let path = UIBezierPath()
+        path.lineWidth = self.frame.size.width / 30
+        switch shape {
+            case .diamond: createDiamondShape(path: path, rect: rect, color: self.color)
+            case .oval: createOvalShape(path: path, rect: rect, color: self.color)
+            case .squiggle: createSquiggleShape(path: path, rect: rect, color: self.color)
+        }
+        return path
+    }
+    
+    private func createShade(path: UIBezierPath, rect: CGRect) {
+        switch shade {
+            case .solid: createFilledShape(path: path, color: self.color)
+            case .striped: createStripedShape(path: path, rect: rect, color: self.color)
+            case .unfilled: break
+        }
+    }
+    
+    private func createStripedShape(path: UIBezierPath, rect: CGRect, color: UIColor) {
         path.removeAllPoints()
         for xPosition in stride(from: rect.origin.x, to: rect.maxX, by: rect.size.width / 10) {
             path.move(to: CGPoint(x: xPosition, y: rect.origin.y))
@@ -87,13 +105,13 @@ class CardView: UIView {
         color.setStroke()
         path.stroke()
     }
-    func createFilledShape(path: UIBezierPath, color: UIColor) {
+    private func createFilledShape(path: UIBezierPath, color: UIColor) {
         //        path.removeAllPoints()
         color.setFill()
         path.fill()
     }
     
-    func createSquiggleShape(path: UIBezierPath, rect: CGRect, color: UIColor) {
+    private func createSquiggleShape(path: UIBezierPath, rect: CGRect, color: UIColor) {
         path.removeAllPoints()
         let quadControlPointLength = rect.width / 8
         path.move(to: CGPoint(x: rect.origin.x + quadControlPointLength, y: rect.origin.y + quadControlPointLength * 2))
@@ -107,7 +125,7 @@ class CardView: UIView {
         color.setStroke()
         path.stroke()
     }
-    func createDiamondShape(path: UIBezierPath, rect: CGRect, color: UIColor) {
+    private func createDiamondShape(path: UIBezierPath, rect: CGRect, color: UIColor) {
         path.removeAllPoints()
         let verticalSafeSpace = rect.size.height / 8
         let horizontalSafeSpace = rect.size.width / 8
@@ -120,7 +138,7 @@ class CardView: UIView {
         path.stroke()
     }
     
-    func createOvalShape(path: UIBezierPath, rect: CGRect, color: UIColor) {
+    private func createOvalShape(path: UIBezierPath, rect: CGRect, color: UIColor) {
         path.removeAllPoints()
         let controlPointLength = rect.width / 8
         path.move(to: CGPoint(x: (rect.origin.x + controlPointLength), y: rect.origin.y + controlPointLength))

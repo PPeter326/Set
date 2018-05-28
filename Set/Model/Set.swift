@@ -35,13 +35,22 @@ class Set {
     var selectedCards = [Card]() {
         didSet {
             if selectedCards.count == 3 {
-                matchCards()
+                // A set of cards are matched when any of the attributes are matched between ONLY two cards
+                // If cards are matched, add them to the matched cards
+                if onlyTwoEquals(amongst: selectedCards) {
+                    score += 3
+                    self.matchedCards.append(contentsOf: selectedCards)
+                    matched = true
+                } else {
+                    score -= 5
+                    matched = false
+                }
             }
         }
     }
     var matchedCards = [Card]()
     var playedCards = [Card]()
-    private(set) var matched = false
+    private(set) var matched: Bool?
     private(set) var score: Int = 0
     
     init() {
@@ -52,18 +61,30 @@ class Set {
     
     // MARK: - Game Methdods
     
-    func selectCard(card: Card) {
-        // Do nothing if it's one of the matched cards
-        // 1. Add to selected cards -> return true
-        //  a. if the card is not already selected
-        //  b.
-        // 2. Remove from selected cards -> return false
-        //  a. If the card is already selected
-        // I. Add or remove cards in selectedCard arrays
-        if !matchedCards.contains(card) {
+    /// This function add or remove the card to selectedCards array depending on the context.
+    /// Do nothing if it's one of the matched cards
+    /// If there are 0 to 2 cards already selected, add card to selectedCards array if the card is not already one of the element in the array
+    /// If the card is already one of the element in the array, remove the card from selectedCards array
+    /// When there are three cards already selected, the selectedCards array will be cleared and the new card will be added to the array.
+    /// If the selected cards have been matched, in the playedCards array the matched cards will be replaced with new cards from the deck.
+    /// If there are no more cards in the deck, the matched cards will simply be removed with no replacement.
+    /// - Parameter card: Card type that is accessed from playedCards array with index from the cardView
+    func selectCard(card: Card, result: (_ selected: Selected) -> Void) {
+        
+         if !matchedCards.contains(card) {
             switch self.selectedCards.count {
             case 0...2: // add/remove from selected cards, depending on if user already selected the card
-                addOrRemoveSelectedCard(card)
+                if selectedCards.contains(card) {
+                    // get index of the card in selected cards
+                    let index = selectedCards.index(of: card)!
+                    selectedCards.remove(at: index)
+//                    let selected = Selected.deselected
+                    result(.deselected)
+                    score -= 1
+                } else {
+                    selectedCards.append(card)
+                    result(.selected)
+                }
             case 3:
                 // User should not be able to select any of the matched cards.  For any other cards, simply clear the selectedcards array and append new one
                 // the 3 cards already selected could be A. matched or B. not-matched
@@ -72,38 +93,61 @@ class Set {
                 // 1. - B. clear selected cards, and add user's selected card to the list.
                 // 2. - A. The played cards replace selected cards with new cards from deck.  The selected cards are cleared.  User's new select card is added to the selcted cards list.
                 // 2. - B. clear selected cards, and add user's selected card to the list
-                if matched && !deck.isEmpty { // replace played cards with cards from deck if there was a match and deck is not empty
-                    for selectedCard in selectedCards {
-                        replacePlayedCard(atIndex: playedCards.index(of: selectedCard)!)
+                // replace played cards with cards from deck if there was a match and deck is not empty
+                if matched! { // If there are already 3 cards selected, there must have been a match
+                    if deck.isEmpty {
+                        for selectedCard in selectedCards {
+                            playedCards.remove(at: playedCards.index(of: selectedCard)!)
+                        }
+                    } else {
+                        for selectedCard in selectedCards {
+                            playedCards[playedCards.index(of: selectedCard)!] = deck.removeLast()
+                        }
                     }
                 }
+                self.matched = nil // reset matched status after removing matched cards from play
                 selectedCards.removeAll()
                 selectedCards.append(card)
+                result(.reset)
             default: // There should be no more than 3 cards selected at a time
                 break
             }
+         } else {
+            result(.noAction)
         }
     }
     
-    func dealCards() {
-        // If there are three selected cards:
-        // A. three cards already matched: deal cards to replace matched cards
-        // B. three cards not matched:  clear selected cards, and deal 3 cards to add at the end
-        // add three cards from deck to played cards at the end
-        if selectedCards.count == 3 {
-            if matched {
-                for selectedCard in selectedCards {
-                    replacePlayedCard(atIndex: playedCards.index(of: selectedCard)!)
+    enum Selected {
+        case selected, deselected, noAction, reset
+    }
+    
+    /// If there are three selected cards:
+    /// A. three cards already matched: deal cards to replace matched cards
+    /// B. three cards not matched:  clear selected cards, and deal 3 cards to add at the end
+    /// add three cards from deck to played cards at the end
+    func dealCards(completion: (_ clearSelection: Bool, _ matched: Bool?)-> Void) {
+        var matchedStatus: Bool?
+        if !deck.isEmpty {
+            if let matched = matched { // there were 3 cards selected and a match was performed
+                if matched { // cards matched - dealt cards will replace the matched cards at index
+                    matchedStatus = true
+                    for selectedCard in selectedCards {
+                        playedCards[playedCards.index(of: selectedCard)!] = deck.removeLast()
+                    }
+                } else {  // cards not matched - dealt cards simply gets added to the playedcards at the end
+                    matchedStatus = false
+                    for _ in 1...3 {
+                        dealCard(at: (playedCards.endIndex) - 1)
+                    }
                 }
-            } else {
+                selectedCards.removeAll()
+                self.matched = nil // reset match
+                completion(true, matchedStatus)
+            } else { // There has not been any matching (user selected 0 - 2 cards only)
                 for _ in 1...3 {
                     dealCard(at: (playedCards.endIndex) - 1)
                 }
-            }
-            selectedCards.removeAll()
-        } else {
-            for _ in 1...3 {
-                dealCard(at: (playedCards.endIndex) - 1)
+                completion(false, matchedStatus)
             }
         }
     }
@@ -119,9 +163,20 @@ class Set {
     }
     
     // MARK: - Helper Methods
+    func shuffleRemainingCards() {
+        // clear selection
+        selectedCards.removeAll()
+        // add playedcards back to the deck
+        deck.append(contentsOf: playedCards)
+        // shuffle cards
+        shuffleCards()
+        // deal the same number of new cards as previously played cards
+        for index in playedCards.indices {
+            playedCards[index] = deck.removeLast()
+        }
+    }
     
     private func shuffleCards() {
-        
         var shuffledCards = [Card]()
         for _ in 0...(self.deck.count - 1) {
             let randomIndex = self.deck.count.arc4random
@@ -129,6 +184,7 @@ class Set {
         }
         self.deck = shuffledCards
     }
+    
     private func drawCards() {
         for _ in 0...11 {
             playedCards.append(deck.removeLast())
@@ -138,29 +194,6 @@ class Set {
     private func dealCard(at index: Int) {
         playedCards.insert(deck.removeLast(), at: index)
     }
-    private func matchCards() {
-        // A set of cards are matched when any of the attributes are matched between ONLY two cards
-        // If cards are matched, add them to the matched cards
-        if onlyTwoEquals(amongst: selectedCards) {
-            score += 3
-            self.matchedCards.append(contentsOf: selectedCards)
-            matched = true
-        } else {
-            score -= 5
-            matched = false
-        }
-    }
-    
-    private func addOrRemoveSelectedCard(_ card: Card){
-        if selectedCards.contains(card) {
-            // get index of the card in selected cards
-            let index = selectedCards.index(of: card)!
-            selectedCards.remove(at: index)
-            score -= 1
-        } else {
-            selectedCards.append(card)
-        }
-    }
     
     private func onlyTwoEquals(amongst cards:[Card]) -> Bool {
         // Go through each card in the array and compare each attribute.  The cards are matched only if all attributes of all cards in a set are same or totally different.
@@ -169,12 +202,12 @@ class Set {
         
         let shadingAttributeMatch = (cards[0].shading == cards[1].shading && cards[1].shading == cards[2].shading) || (cards[0].shading != cards[1].shading && cards[1].shading != cards[2].shading && cards[0].shading != cards[2].shading)
         
-        let numberOfSymbolsMatch = (cards[0].numberOfSymbols == cards[1].numberOfSymbols && cards[1].numberOfSymbols == cards[2].numberOfSymbols) || (cards[0].numberOfSymbols != cards[1].numberOfSymbols && cards[1].numberOfSymbols != cards[2].numberOfSymbols && cards[0].numberOfSymbols != cards[2].numberOfSymbols)
+        let numberOfShapesMatch = (cards[0].numberOfShapes == cards[1].numberOfShapes && cards[1].numberOfShapes == cards[2].numberOfShapes) || (cards[0].numberOfShapes != cards[1].numberOfShapes && cards[1].numberOfShapes != cards[2].numberOfShapes && cards[0].numberOfShapes != cards[2].numberOfShapes)
         
-        let symbolsMatch = (cards[0].symbol == cards[1].symbol && cards[1].symbol == cards[2].symbol) || (cards[0].symbol != cards[1].symbol && cards[1].symbol != cards[2].symbol && cards[0].symbol != cards[2].symbol)
+        let shapesMatch = (cards[0].shape == cards[1].shape && cards[1].shape == cards[2].shape) || (cards[0].shape != cards[1].shape && cards[1].shape != cards[2].shape && cards[0].shape != cards[2].shape)
         
         // Only a match if all attributes match
-        return symbolsMatch && numberOfSymbolsMatch && shadingAttributeMatch && colorAttributeMatch
+        return shapesMatch && numberOfShapesMatch && shadingAttributeMatch && colorAttributeMatch
 //        return true
     }
     private func replacePlayedCard(atIndex index: Int) {

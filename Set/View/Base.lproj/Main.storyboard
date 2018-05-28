@@ -37,8 +37,10 @@
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dep-vr-LtP">
                                                 <rect key="frame" x="191" y="0.0" width="191" height="19"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <size key="titleShadowOffset" width="3" height="3"/>
                                                 <state key="normal" title="NEW GAME">
-                                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="newGameButtonTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="72b-hk-IFA"/>
@@ -46,9 +48,9 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="e7L-Nl-86x" userLabel="PlayingCardsView" customClass="PlayingCardsMainView" customModule="Set" customModuleProvider="target">
+                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7L-Nl-86x" userLabel="PlayingCardsView" customClass="PlayingCardsMainView" customModule="Set" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="27" width="382" height="619"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTR-ZA-oLL">
                                         <rect key="frame" x="115.66666666666666" y="654" width="150.99999999999997" height="30"/>

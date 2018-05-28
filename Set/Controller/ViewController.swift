@@ -12,14 +12,71 @@ class ViewController: UIViewController {
     
     // MARK: - UI Elements -
     
-    @IBOutlet weak var playingCardsMainView: PlayingCardsMainView!
-    @IBOutlet weak var scoreLabel: UILabel!
+    
+    @IBOutlet weak var playingCardsMainView: PlayingCardsMainView! {
+        didSet {
+            // make new cardviews
+            makeCardViews()
+            // add swipe and rotate gestures to deal and shuffle, respectively
+            let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownToDeal(_:)))
+            swipeDown.direction = .down
+            playingCardsMainView.addGestureRecognizer(swipeDown)
+            let rotate = UIRotationGestureRecognizer(target: self, action: #selector(rotateToShuffle(_:)))
+            playingCardsMainView.addGestureRecognizer(rotate)
+        }
+    }
+    
+    @IBOutlet weak var scoreLabel: UILabel! {
+        didSet {
+            scoreLabel.attributedText = updateAttributedString("SCORE: 0")
+        }
+    }
+
+    var score: Int = 0 {
+        didSet {
+            let scoreString = "SCORE: \(score)"
+            scoreLabel.attributedText = updateAttributedString(scoreString)
+            
+        }
+    }
     @IBOutlet weak var dealCardButton: UIButton! {
         didSet {
             dealCardButton.layer.cornerRadius = 8.0
         }
     }
-    private var lastButtonsToHide = [UIButton]()
+    
+    
+    var selectedCardViews = [CardView]() {
+        didSet {
+            assert(selectedCardViews.count < 4, "invalid number of selected card views")
+            // reset cardviews style on prior selected cards
+            for cardView in oldValue {
+                cardView.layer.borderWidth = cardView.frame.width / 100
+                cardView.layer.borderColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
+            }
+            // show border on new selected cards
+            for cardView in selectedCardViews {
+                cardView.layer.borderWidth = cardView.frame.width / 15
+                cardView.layer.borderColor = #colorLiteral(red: 0, green: 0.9914394021, blue: 1, alpha: 1).cgColor
+            }
+            if let matched = set.matched {
+                if matched {
+                    selectedCardViews = selectedCardViews.map { (cardView) -> CardView in
+                        cardView.layer.borderWidth = cardView.frame.width / 15
+                        cardView.layer.borderColor =  UIColor.green.cgColor
+                        return cardView
+                    }
+                } else {
+                    selectedCardViews = selectedCardViews.map { (cardView) -> CardView in
+                        cardView.layer.borderWidth = cardView.frame.width / 15
+                        cardView.layer.borderColor =  UIColor.red.cgColor
+                        return cardView
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - Game Properties -
     private var set = Set()
     
@@ -30,80 +87,174 @@ class ViewController: UIViewController {
         .color3: #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1)
     ]
     
-    private let symbolDiciontary: [Card.Symbol: Character] = [
-        .symbol1: "▲",
-        .symbol2: "◼︎",
-        .symbol3: "✦"
+    private let shapeDictionary: [Card.Shape: CardView.Shape] = [
+        .shape1: CardView.Shape.diamond,
+        .shape2: CardView.Shape.oval,
+        .shape3: CardView.Shape.squiggle
     ]
     
-    private let shadingDictionary: [Card.Shading: ShadingType] = [
-        .shading1: .filled,
-        .shading2: .striped,
-        .shading3: .outlined
+    private let shadingDictionary: [Card.Shading: CardView.Shade] = [
+        .shading1: CardView.Shade.solid,
+        .shading2: CardView.Shade.striped,
+        .shading3: CardView.Shade.unfilled
     ]
     
-    private enum ShadingType {
-        case filled
-        case striped
-        case outlined
-    }
     // MARK: - View Config -
-    override func viewDidLoad() {
-        // Display the cards that were drawn
-//        displayPlayedCards()
-    }
+    
     
     // MARK: - User Actions -
-//    @IBAction func newGameButtonTouched(_ sender: UIButton) {
-//        set.reset()
-//        lastButtonsToHide.removeAll()
-//        updateView()
-//    }
     
-//    @IBAction func dealCardButtonTouched(_ sender: UIButton) {
-//        // tells game to deal three cards
-//        set.dealCards()
-//        updateView()
-//    }
+    @objc func selectCard( _ gestureRecognizer: UITapGestureRecognizer) {
+        assert(set.playedCards.count == playingCardsMainView.cardViews.count, "set: \(set.playedCards.count) views: \(playingCardsMainView.cardViews.count)")
+        if gestureRecognizer.state == .ended {
+            // tells set to select card
+            let cardView = gestureRecognizer.view as! CardView
+            let cardViewIndex = playingCardsMainView.cardViews.index(of: cardView)!
+            let card = set.playedCards[cardViewIndex]
+            
+            set.selectCard(card: card) { result in
+                switch result {
+                case .selected: selectedCardViews.append(cardView)
+                case .deselected:
+                    guard let index = selectedCardViews.index(of: cardView) else { return }
+                    selectedCardViews.remove(at: index)
+                case .reset:
+                    if set.deck.isEmpty {
+                        // If deck is empty, then the views are shifted.  There are now less card views than before
+                        // disable dealcard button
+                        dealCard(disable: true)
+                        // make new cardviews because there are now less cards being displayed
+                        makeCardViews()
+                        // there are now less cardViews than before and index of previously selected cardView has now been changed
+                        // get the index of the card from played card
+                        let index = set.playedCards.index(of: card)!
+                        // get the selectedCardview from the new index
+                        let updatedSelectedCardView = playingCardsMainView.cardViews[index]
+                        selectedCardViews.removeAll()
+                        selectedCardViews.append(updatedSelectedCardView)
+                    } else { // There's always same or more card views than before.
+                        makeCardViews()
+                        selectedCardViews.removeAll()
+                        selectedCardViews.append(cardView)
+                    }
+                default: break
+                }
+                // update score
+                self.score = set.score
+            }
+        }
+    }
+    @IBAction func newGameButtonTouched(_ sender: UIButton) {
+        // reset game
+        set.reset()
+        // clear selectedCardViews
+        self.selectedCardViews.removeAll()
+        // update card views
+        makeCardViews()
+        // update score
+        score = set.score
+        
+    }
+    
+    @IBAction func dealCardButtonTouched(_ sender: UIButton) {
+        dealCards()
+    }
+    
+    @objc func swipeDownToDeal(_ gestureRecognizer: UIGestureRecognizer) {
+        if gestureRecognizer.state == .ended {
+            dealCards()
+        }
+    }
+    
+    @objc func rotateToShuffle(_ gestureRecognizer: UIGestureRecognizer) {
+        
+        switch gestureRecognizer.state {
+        case .ended:
+            // shuffle cards if deck isn't empty, and a match hasn't taken place yet
+            if !set.deck.isEmpty && set.selectedCards.count < 3 {
+                // clear selection cards
+                selectedCardViews.removeAll()
+                // shuffle remaining cards in play and deck
+                set.shuffleRemainingCards()
+                // update cardViews
+                makeCardViews()
+            }
+        default: break
+        }
+        
+
+    }
+    private func updateAttributedString(_ string: String) -> NSAttributedString {
+        var font = UIFont.preferredFont(forTextStyle: .headline).withSize(scoreLabel.frame.height * 0.85)
+        font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: font)
+        //        let strokeColor = UIColor.black
+        //
+        //        let strokeWidth = scoreLabel.frame.height / 2
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        let stringAttributes: [NSAttributedStringKey: Any] = [
+            .font: font,
+            //            .strokeColor: strokeColor,
+            //            .strokeWidth: strokeWidth,
+            .paragraphStyle: paragraphStyle
+        ]
+        return NSAttributedString(string: string, attributes: stringAttributes)
+    }
+    private func dealCards() {
+        // 1. tells game to deal three cards, then display the new cards
+        // make new cards views only if:
+        // A. A match was performed, but there was no match
+        // B. No match was performed.
+        set.dealCards { (clearSelection, matchedStatus) in
+            if clearSelection { // selections were cleared - that means a match was performed
+                if let matchedStatus = matchedStatus {
+                    if matchedStatus == false { // (A)
+                        makeCardViews()
+                    } else { // make cardViews only for those cards replaced
+                        for selectedCardView in selectedCardViews {
+                            let index = playingCardsMainView.cardViews.index(of: selectedCardView)!
+                            let card = set.playedCards[index]
+                            makeCardView(cardView: selectedCardView, card: card)
+                        }
+                    }
+                }
+                // remove all selected card views
+                selectedCardViews.removeAll()
+            } else {
+                makeCardViews() // (B)
+            }
+        }
+        if set.deck.count == 0 {
+            dealCard(disable: true)
+        }
+    }
     
     // MARK: - Helper Functions -
     
-//    private func updateView() {
-//
-//        // First display the currently played cards
-//        displayPlayedCards()
-//        // then show borders on the selected cards
-//        // 1. If there are 3 selected cards:
-//        // 2. If less than 3 selected cards, show purple border for card selection
-//        switch set.selectedCards.count {
-//        case 1, 2:
-//            showBorder(on: set.selectedCards, color: #colorLiteral(red: 0.5808190107, green: 0.0884276256, blue: 0.3186392188, alpha: 1))
-//        case 3:
-//            if set.matched {
-//                showBorder(on: set.selectedCards, color: #colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1))
-//            } else {
-//                showBorder(on: set.selectedCards, color: #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1))
-//            }
-//        default:
-//            break
-//        }
-//        // disable deal card button when:
-//        // 1. If the deck is empty (always)
-//        // 2. If there are already 24 cards (number of card buttons showing on UI) being played (but enable if the 3 selected cards are matching)
-//        var disableDealcard = false
-////        if set.playedCards.count == playingCardsMainView.cardViews?.count {
-////            disableDealcard = true
-////            if set.selectedCards.count == 3 && set.matched == true {
-////                disableDealcard = false
-////            }
-////        }
-//        if set.deck.isEmpty {
-//            disableDealcard = true
-//        }
-//        dealCard(disable: disableDealcard)
-//        scoreLabel.text = "Score: \(set.score)"
-//
-//    }
+    private func makeCardViews() {
+        playingCardsMainView.numberOfCardViews = set.playedCards.count
+        for (index, card) in set.playedCards.enumerated() {
+            let cardView = playingCardsMainView.cardViews[index]
+            makeCardView(cardView: cardView, card: card)
+        }
+    }
+    
+    private func makeCardView(cardView: CardView, card: Card) {
+        guard let color = colorDictionary[card.color] else { return }
+        guard let shape = shapeDictionary[card.shape] else { return }
+        let numberOfShapes = card.numberOfShapes.rawValue
+        guard let shading = shadingDictionary[card.shading] else { return }
+        
+        cardView.color = color
+        cardView.shade = shading
+        cardView.shape = shape
+        cardView.numberOfShapes = numberOfShapes
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(selectCard(_:)))
+        tap.numberOfTapsRequired = 1
+        cardView.addGestureRecognizer(tap)
+    }
+    
     private func dealCard(disable: Bool) {
         if disable {
             self.dealCardButton.isEnabled = false
@@ -115,82 +266,7 @@ class ViewController: UIViewController {
             self.dealCardButton.setTitleColor(UIColor.white, for: .normal)
         }
     }
-//    private func getCardButtons(of card: Card) -> UIView {
-//        let index = set.playedCards.index(of: card)
-//        return playingCardsMainView.cardViews?[index!]
-//    }
-    
-//    private func displayPlayedCards() {
-//        // start with clean slate
-//        cardButtons.map { (cardButton) -> UIButton in
-//            cardButton.isEnabled = false
-//            cardButton.isHidden = true
-//            return cardButton
-//        }
-//        // only display cards that are being played
-//        for index in set.playedCards.indices {
-//            cardButtons[index].isEnabled = true
-//            cardButtons[index].isHidden = false
-//            cardButtons[index].layer.borderWidth = CGFloat(0)
-//            cardButtons[index].setAttributedTitle(displayCard(card: set.playedCards[index]), for: .normal)
-//        }
-//        // Check if to add new buttons to hide
-//        hideLastButtons()
-//        for button in lastButtonsToHide {
-//            button.isEnabled = false
-//            button.isHidden = true
-//        }
-//
-//    }
-    
-//    private func hideLastButtons() {
-//        if set.deck.isEmpty && set.selectedCards.count == 1 {
-//            for card in set.matchedCards {
-//                if let matchedCardIndex = set.playedCards.index(of: card) {
-//                    let hideCardButton = cardButtons[matchedCardIndex]
-//                    self.lastButtonsToHide.append(hideCardButton)
-//                }
-//            }
-//
-//        }
-//    }
-//    private func showBorder(on selectedCards: [Card], color: UIColor) {
-//        // then add border to the selected card buttons
-//        for selectedCard in set.selectedCards {
-//            let cardButton = getCardButtons(of: selectedCard)
-//            cardButton.layer.borderColor = color.cgColor
-//            cardButton.layer.borderWidth = 3.0
-//        }
-//    }
-    
-    private func getAttributes(color: UIColor, shading: ShadingType) -> [NSAttributedStringKey: Any] {
-        switch shading {
-        case .filled:
-            return [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 25), NSAttributedStringKey.foregroundColor: color]
-        case .striped:
-            return [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 25), NSAttributedStringKey.foregroundColor: color.withAlphaComponent(0.15)]
-        case .outlined:
-            return [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 25),
-                    NSAttributedStringKey.foregroundColor: UIColor.white,
-                    NSAttributedStringKey.strokeColor: color,
-                    NSAttributedStringKey.strokeWidth: -5.0
-            ]
-        }
-    }
-    
-    private func displayCard(card: Card) -> NSAttributedString {
-        let cardColor = colorDictionary[card.color]!
-        let cardSymbolCharacter = symbolDiciontary[card.symbol]!
-        let cardSymbolCharacterArray = Array(repeatElement(cardSymbolCharacter, count: card.numberOfSymbols.rawValue))
-        let cardsymbolString = String(cardSymbolCharacterArray)
-        let stringAttributes: [NSAttributedStringKey: Any] = getAttributes(color: cardColor, shading: shadingDictionary[card.shading]!)
-        let attributedString = NSAttributedString(string: cardsymbolString, attributes: stringAttributes)
-        return attributedString
-    }
-    
-    private func getPlayedCard(index: Int) -> Card {
-        return set.playedCards[index]
-    }
-    
 }
+
+
 
